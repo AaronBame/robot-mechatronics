@@ -199,7 +199,7 @@ void OC_config(void) {
     angle_tur = 90;
     // 0.03 = 0 deg (left)
     // 0.075 = 90 deg (front)
-    // 0.12  = 180 deg (right)
+    // 0.125  = 180 deg (right)
 
     //Paddle + Release servos PWM (Pin 5)
     OC3CON1bits.OCTSEL = 0b100;     //Set OC to Timer 1 (100)
@@ -359,11 +359,15 @@ void __attribute__((interrupt, no_auto_psv)) _CompInterrupt(void) {
             steps = -30;
         }
         else {
-            while ((ADC1BUF4/4095.0) < 0.65) {};
+            while ((ADC1BUF4/4095.0) < 0.8) {};
             steps = 0;
         }
         state = ROTATE;
-        return;
+       
+        CM1CONbits.CEVT=0;
+         return;
+//        state=ROTATE;
+//        steps=0;
     }
 
     //if LED changes while shooting
@@ -391,7 +395,7 @@ void __attribute__((interrupt, no_auto_psv)) _CompInterrupt(void) {
                 PR4 = 14000;
             }
             angle_tur = 180;
-            OC2R = 0.12 * OC2RS;
+            OC2R = 0.125 * OC2RS;
         }
         //LLED
         else if (CM3CONbits.CEVT == 1) {
