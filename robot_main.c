@@ -93,12 +93,13 @@ int main(void) {
             case ROTATE:
                 // Rotate opposite direction to face corner
                 //180 deg = 1400
-                if (steps < turn) {
+                if (steps < 1280) {
                     _LATB12 = 0;
                     _LATB13 = 1;
-                    OC1RS = vrotate2;
+                    //OC1RS = vrotate2;
+                    OC1RS = 9000;
                 }
-                else if (steps >= turn) {
+                else if (steps >= 1280) {
                     steps = 10000; // for initially finding corner
                     state = REVERSE;
                 }
@@ -122,16 +123,16 @@ int main(void) {
                     pad_count = 0;
                     state = COLLECT;
                 }
-                else if (steps >= 10000 && steps < 13500) {
-                    OC1RS = v1;
-                }
-                else if (steps >= 13500) {
-                    _LATB4 = 0;
-                    TMR3 = 0;
-                    angle_pad = 0;
-                    pad_count = 0;
-                    state = COLLECT;
-                }
+//                else if (steps >= 10000 && steps < 13500) {
+//                    OC1RS = v1;
+//                }
+//                else if (steps >= 13500) {
+//                    _LATB4 = 0;
+//                    TMR3 = 0;
+//                    angle_pad = 0;
+//                    pad_count = 0;
+//                    state = COLLECT;
+//                }
                 OC1R = 0.9*OC1RS;
                 break;
             case COLLECT:
